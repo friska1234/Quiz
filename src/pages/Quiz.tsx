@@ -10,17 +10,7 @@ import { Loader } from "lucide-react";
 import type { QuizState } from '@/types/quiz';
 
 const Quiz = () => {
-  // Define the calculateScore function early before it's used
-  const calculateScore = (answers: Record<string, string>, questions: any[]) => {
-    let correctAnswers = 0;
-    questions.forEach(question => {
-      if (answers[question.id] === question.correctAnswer) {
-        correctAnswers++;
-      }
-    });
-    return correctAnswers;
-  };
-
+  // Define the quiz state and functions first
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [quizState, setQuizState] = useState<QuizState>({
@@ -30,6 +20,27 @@ const Quiz = () => {
     showExplanation: false,
     quizCompleted: false
   });
+
+  // Define the calculateScore function early
+  const calculateScore = (answers: Record<string, string>, questions: any[]) => {
+    let correctAnswers = 0;
+    questions.forEach(question => {
+      if (answers[question.id] === question.correctAnswer) {
+        correctAnswers++;
+      }
+    });
+    return correctAnswers;
+  };
+  
+  const resetQuiz = () => {
+    setQuizState({
+      questions: quizState.questions,
+      currentQuestionIndex: 0,
+      answers: {},
+      showExplanation: false,
+      quizCompleted: false
+    });
+  };
 
   useEffect(() => {
     const loadQuestions = async () => {
@@ -83,7 +94,11 @@ const Quiz = () => {
     const score = calculateScore(quizState.answers, quizState.questions);
     const totalQuestions = quizState.questions.length;
     
-    return <QuizSuccessPage score={score} totalQuestions={totalQuestions} />;
+    return <QuizSuccessPage 
+      score={score} 
+      totalQuestions={totalQuestions} 
+      onTryAgain={resetQuiz}
+    />;
   }
 
   const currentQuestion = quizState.questions[quizState.currentQuestionIndex];

@@ -1,14 +1,15 @@
 
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { Share2, Trophy, AlertTriangle } from "lucide-react";
+import { Share2, Trophy } from "lucide-react";
 
 interface QuizSuccessPageProps {
   score: number;
   totalQuestions: number;
+  onTryAgain?: () => void;
 }
 
-const QuizSuccessPage = ({ score, totalQuestions }: QuizSuccessPageProps) => {
+const QuizSuccessPage = ({ score, totalQuestions, onTryAgain }: QuizSuccessPageProps) => {
   const percentage = Math.round((score / totalQuestions) * 100);
   const isPro = percentage >= 70; // Assume 70% or higher is "Pro" status
 
@@ -36,7 +37,11 @@ const QuizSuccessPage = ({ score, totalQuestions }: QuizSuccessPageProps) => {
           ) : (
             <>
               <div className="relative mb-8 flex justify-center">
-                <AlertTriangle size={120} className="text-amber-500" strokeWidth={1.5} />
+                <img 
+                  src="/lovable-uploads/0cf38a00-f42a-4766-923f-990d0ab1003d.png" 
+                  alt="Trophy with alert" 
+                  className="h-64 w-auto"
+                />
               </div>
               <h1 className="text-3xl font-bold mb-2">
                 You're getting there — not a<br />NutriAI Pro just yet!
@@ -46,11 +51,12 @@ const QuizSuccessPage = ({ score, totalQuestions }: QuizSuccessPageProps) => {
                 wrong answers. Take a moment to review and try again.
                 You're almost there!
               </p>
-              <Link to="/quiz">
-                <Button className="bg-friska-purple hover:bg-friska-light-purple text-white px-5 py-2">
-                  Try Again
-                </Button>
-              </Link>
+              <Button 
+                onClick={onTryAgain} 
+                className="bg-friska-purple hover:bg-friska-light-purple text-white px-8 py-4 text-lg rounded-lg"
+              >
+                Try Again
+              </Button>
             </>
           )}
         </div>
