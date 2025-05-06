@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { Share2 } from "lucide-react";
+import { Share2, Trophy, AlertTriangle } from "lucide-react";
 
 interface QuizSuccessPageProps {
   score: number;
@@ -18,15 +18,11 @@ const QuizSuccessPage = ({ score, totalQuestions }: QuizSuccessPageProps) => {
         <div className="bg-[#fff8f8] rounded-lg p-8 text-center shadow-md">
           {isPro ? (
             <>
-              <div className="relative mb-8">
-                <img 
-                  src="/lovable-uploads/ddb0915a-adfd-49ce-9a8f-7567db801ba4.png" 
-                  alt="Trophy with confetti" 
-                  className="mx-auto h-64 w-auto"
-                />
+              <div className="relative mb-8 flex justify-center">
+                <Trophy size={120} className="text-friska-green animate-pulse" strokeWidth={1.5} />
               </div>
               <h1 className="text-3xl font-bold mb-2">
-                Congratulations, Your a<br />NutriAI Pro Now
+                Congratulations, You're a<br />NutriAI Pro Now
               </h1>
               <p className="text-gray-700 mb-8 max-w-md mx-auto">
                 Congratulations! You've successfully completed the quiz 
@@ -39,12 +35,8 @@ const QuizSuccessPage = ({ score, totalQuestions }: QuizSuccessPageProps) => {
             </>
           ) : (
             <>
-              <div className="relative mb-8">
-                <img 
-                  src="/lovable-uploads/c8cc482f-a278-4cd9-9ec2-0a9ea9a83178.png" 
-                  alt="Trophy with alert" 
-                  className="mx-auto h-64 w-auto"
-                />
+              <div className="relative mb-8 flex justify-center">
+                <AlertTriangle size={120} className="text-amber-500" strokeWidth={1.5} />
               </div>
               <h1 className="text-3xl font-bold mb-2">
                 You're getting there — not a<br />NutriAI Pro just yet!
