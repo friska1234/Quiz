@@ -1,20 +1,71 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import ProgressBar from '@/components/quiz/ProgressBar';
 import QuizOption from '@/components/quiz/QuizOption';
-import { quizQuestions } from '@/data/quizQuestions';
+import { fetchQuizQuestions } from '@/services/quizService';
+import { toast } from "@/components/ui/sonner";
+import { Loader } from "lucide-react";
 import type { QuizState } from '@/types/quiz';
 
 const Quiz = () => {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [quizState, setQuizState] = useState<QuizState>({
-    questions: quizQuestions,
+    questions: [],
     currentQuestionIndex: 0,
     answers: {},
     showExplanation: false,
     quizCompleted: false
   });
+
+  useEffect(() => {
+    const loadQuestions = async () => {
+      try {
+        setLoading(true);
+        const questions = await fetchQuizQuestions();
+        setQuizState(prevState => ({
+          ...prevState,
+          questions
+        }));
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to load quiz questions. Please try again later.");
+        toast.error("Failed to load quiz questions");
+        setLoading(false);
+      }
+    };
+
+    loadQuestions();
+  }, []);
+
+  // If still loading or no questions available yet
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-12 flex flex-col items-center justify-center h-64">
+        <Loader className="h-8 w-8 animate-spin text-friska-purple mb-4" />
+        <p className="text-lg text-gray-600">Loading quiz questions...</p>
+      </div>
+    );
+  }
+
+  // If there was an error fetching questions
+  if (error || quizState.questions.length === 0) {
+    return (
+      <div className="container mx-auto px-4 py-12 max-w-3xl">
+        <div className="bg-white shadow-md rounded-lg p-6 mb-8 text-center">
+          <h2 className="text-2xl font-bold text-red-500 mb-4">Oops! Something went wrong</h2>
+          <p className="mb-6 text-gray-700">{error || "No quiz questions available."}</p>
+          <Link to="/">
+            <Button className="bg-friska-purple hover:bg-friska-light-purple text-white">
+              Back to Home
+            </Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   const currentQuestion = quizState.questions[quizState.currentQuestionIndex];
   const selectedAnswer = quizState.answers[currentQuestion.id] || '';
