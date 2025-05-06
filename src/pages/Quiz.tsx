@@ -21,6 +21,17 @@ const Quiz = () => {
     quizCompleted: false
   });
 
+  // Define the calculateScore function early before it's used
+  const calculateScore = () => {
+    let correctAnswers = 0;
+    quizState.questions.forEach(question => {
+      if (quizState.answers[question.id] === question.correctAnswer) {
+        correctAnswers++;
+      }
+    });
+    return correctAnswers;
+  };
+
   useEffect(() => {
     const loadQuestions = async () => {
       try {
@@ -128,16 +139,6 @@ const Quiz = () => {
         showExplanation: false
       }));
     }
-  };
-
-  const calculateScore = () => {
-    let correctAnswers = 0;
-    quizState.questions.forEach(question => {
-      if (quizState.answers[question.id] === question.correctAnswer) {
-        correctAnswers++;
-      }
-    });
-    return correctAnswers;
   };
 
   return (
