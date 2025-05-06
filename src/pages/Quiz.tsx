@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -11,6 +10,17 @@ import { Loader } from "lucide-react";
 import type { QuizState } from '@/types/quiz';
 
 const Quiz = () => {
+  // Define the calculateScore function early before it's used
+  const calculateScore = (answers: Record<string, string>, questions: any[]) => {
+    let correctAnswers = 0;
+    questions.forEach(question => {
+      if (answers[question.id] === question.correctAnswer) {
+        correctAnswers++;
+      }
+    });
+    return correctAnswers;
+  };
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [quizState, setQuizState] = useState<QuizState>({
@@ -20,17 +30,6 @@ const Quiz = () => {
     showExplanation: false,
     quizCompleted: false
   });
-
-  // Define the calculateScore function early before it's used
-  const calculateScore = () => {
-    let correctAnswers = 0;
-    quizState.questions.forEach(question => {
-      if (quizState.answers[question.id] === question.correctAnswer) {
-        correctAnswers++;
-      }
-    });
-    return correctAnswers;
-  };
 
   useEffect(() => {
     const loadQuestions = async () => {
@@ -81,7 +80,7 @@ const Quiz = () => {
 
   // If quiz is completed, show result page
   if (quizState.quizCompleted) {
-    const score = calculateScore();
+    const score = calculateScore(quizState.answers, quizState.questions);
     const totalQuestions = quizState.questions.length;
     
     return <QuizSuccessPage score={score} totalQuestions={totalQuestions} />;
