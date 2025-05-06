@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import ProgressBar from '@/components/quiz/ProgressBar';
 import QuizOption from '@/components/quiz/QuizOption';
+import QuizSuccessPage from '@/components/quiz/QuizSuccessPage';
 import { fetchQuizQuestions } from '@/services/quizService';
 import { toast } from "@/components/ui/sonner";
 import { Loader } from "lucide-react";
@@ -65,6 +66,14 @@ const Quiz = () => {
         </div>
       </div>
     );
+  }
+
+  // If quiz is completed, show result page
+  if (quizState.quizCompleted) {
+    const score = calculateScore();
+    const totalQuestions = quizState.questions.length;
+    
+    return <QuizSuccessPage score={score} totalQuestions={totalQuestions} />;
   }
 
   const currentQuestion = quizState.questions[quizState.currentQuestionIndex];
@@ -130,61 +139,6 @@ const Quiz = () => {
     });
     return correctAnswers;
   };
-
-  if (quizState.quizCompleted) {
-    const score = calculateScore();
-    const totalQuestions = quizState.questions.length;
-    const percentage = Math.round((score / totalQuestions) * 100);
-
-    return (
-      <div className="container mx-auto px-4 py-12 max-w-3xl">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold mb-4">Nutrition Quiz Results</h1>
-          <div className="mb-6">
-            <div className="w-36 h-36 flex items-center justify-center bg-friska-purple/10 rounded-full mx-auto">
-              <span className="text-4xl font-bold text-friska-purple">{percentage}%</span>
-            </div>
-          </div>
-          <p className="text-lg mb-2">You got <span className="font-bold text-friska-purple">{score}</span> out of <span className="font-bold">{totalQuestions}</span> questions correct.</p>
-        </div>
-
-        <div className="bg-white shadow-md rounded-lg p-6 mb-8">
-          <h3 className="text-xl font-semibold mb-4">Your Nutrition Knowledge Summary</h3>
-          <p className="text-gray-700 mb-4">
-            {percentage >= 80 
-              ? "Excellent job! You have a strong understanding of nutrition fundamentals." 
-              : percentage >= 60 
-              ? "Good work! You have a solid foundation of nutrition knowledge with some areas to improve." 
-              : "Thanks for taking the quiz! There are several nutrition concepts you might want to learn more about."}
-          </p>
-          <p className="text-gray-700">
-            Understanding nutrition is the first step toward making healthier choices. Friska NutriAI can help you continue your learning journey with personalized recommendations.
-          </p>
-        </div>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button 
-            onClick={() => setQuizState({
-              questions: quizQuestions,
-              currentQuestionIndex: 0,
-              answers: {},
-              showExplanation: false,
-              quizCompleted: false
-            })}
-            variant="outline"
-            className="border-friska-purple text-friska-purple hover:bg-friska-purple/10"
-          >
-            Retake Quiz
-          </Button>
-          <Link to="/">
-            <Button className="bg-friska-purple hover:bg-friska-light-purple text-white">
-              Back to Home
-            </Button>
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-3xl">
