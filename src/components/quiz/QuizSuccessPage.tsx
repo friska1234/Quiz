@@ -38,7 +38,7 @@ const QuizSuccessPage = ({ score, totalQuestions, onTryAgain }: QuizSuccessPageP
             <>
               <div className="relative mb-8 flex justify-center">
                 <img 
-                  src="/lovable-uploads/0cf38a00-f42a-4766-923f-990d0ab1003d.png" 
+                  src="/1.png" 
                   alt="Trophy with alert" 
                   className="h-64 w-auto"
                 />
