@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 
-const Nav,,,,,,,bar = () => {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <nav className="bg-white py-4 px-6 shadow-sm">
       <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="flex items-center">
+        <Link to="/https://friskanutriai.com" className="flex items-center">
           <div className="text-2xl font-bold">
             <span className="text-friska-green">Friska</span>
             <span className="text-friska-purple"> NutriAI</span>
@@ -18,7 +18,7 @@ const Nav,,,,,,,bar = () => {
         </Link>
 
         {/* Mobile menu button */}
-        <div className="md:hidden">
+        <div className="hidden">
           <Button 
             variant="ghost" 
             size="sm"
@@ -30,7 +30,7 @@ const Nav,,,,,,,bar = () => {
         </div>
 
         {/* Desktop Navigation */}
-        <ul className="hidden md:flex space-x-6 items-center">
+        <ul className="hidden hidden space-x-6 items-center">
           <li>
             <Link to="/" className="text-gray-700 hover:text-friska-purple transition">
               Home
@@ -72,7 +72,7 @@ const Nav,,,,,,,bar = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="absolute top-16 left-0 right-0 bg-white shadow-md z-50 md:hidden">
+          <div className="absolute hidden top-16 left-0 right-0 bg-white shadow-md z-50 md:hidden">
             <ul className="py-2 px-4">
               <li className="py-2">
                 <Link 
