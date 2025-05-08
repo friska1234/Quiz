@@ -1,7 +1,8 @@
 
  
- import { Share } from 'lucide-react';
+import { Share } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
+
 
 type ConfettiPiece = {
   id: number;
@@ -66,8 +67,8 @@ const CongratulationsCard: React.FC<CongratulationsCardProps> = ({ title, messag
 
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-[#fafdf6]">
-      <Confetti />
-
+      {/* <Confetti /> */}
+       <img src="/2.png" width={100} height={100} alt="image"/>
       <div className="w-full max-w-md mx-auto bg-[#fafdf6] rounded-3xl shadow-lg p-8 flex flex-col items-center">
         <div className="relative mb-6 animate-float">
           {/* Trophy */}
