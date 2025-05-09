@@ -30,7 +30,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Navigation */}
-        <ul className="hidden hidden space-x-6 items-center">
+        <ul className="hidden space-x-6 items-center">
           <li>
             <Link to="/" className="text-gray-700 hover:text-friska-purple transition">
               Home

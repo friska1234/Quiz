@@ -68,37 +68,13 @@ const CongratulationsCard: React.FC<CongratulationsCardProps> = ({ title, messag
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-[#fafdf6]">
       {/* <Confetti /> */}
-       <img src="/2.png" width={100} height={100} alt="image"/>
+       {/* <img src="/2.png" width={100} height={100} alt="image"/> */}
       <div className="w-full max-w-md mx-auto bg-[#fafdf6] rounded-3xl shadow-lg p-8 flex flex-col items-center">
         <div className="relative mb-6 animate-float">
           {/* Trophy */}
-          <div className="relative">
-            {/* Trophy body */}
-            <div className="w-32 h-36 bg-amber-300 rounded-b-lg relative">
-              {/* Trophy cup top */}
-              <div className="absolute -top-4 -left-1 w-34 h-10 bg-amber-300 rounded-t-3xl"></div>
+          
+          <img src="/2.png" width={300} height={300} alt="image" />
 
-              {/* Trophy handles */}
-              <div className="absolute -left-8 top-6 w-8 h-16 bg-amber-300 rounded-full"></div>
-              <div className="absolute -right-8 top-6 w-8 h-16 bg-amber-300 rounded-full"></div>
-
-              {/* Trophy base */}
-              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-6 bg-amber-400"></div>
-              <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-24 h-6 bg-amber-400"></div>
-
-              {/* Trophy star */}
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="w-12 h-12">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                </svg>
-              </div>
-
-              {/* Red ribbon */}
-              <div className="absolute top-0 right-2 w-6 h-12 bg-red-500">
-                <div className="absolute bottom-0 left-0 w-0 h-0 border-l-8 border-l-transparent border-b-8 border-b-red-700"></div>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Text content */}
