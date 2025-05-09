@@ -10,10 +10,9 @@ const Navbar = () => {
   return (
     <nav className="bg-white py-4 px-6 shadow-sm">
       <div className="container mx-auto flex justify-between items-center">
-        <Link to="/https://friskanutriai.com" className="flex items-center">
+        <Link to="https://friskanutriai.com" className="flex items-center">
           <div className="text-2xl font-bold">
-            <span className="text-friska-green">Friska</span>
-            <span className="text-friska-purple"> NutriAI</span>
+<img src="/logo1.png" alt="Logo" className="w-full h-full mr-2"/>
           </div>
         </Link>
 
