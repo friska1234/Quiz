@@ -95,11 +95,13 @@ const CongratulationsCard: React.FC<CongratulationsCardProps> = ({ title, messag
   );
 };
 
- interface QuizSuccessPageProps {
+interface QuizSuccessPageProps {
   score: number;
   totalQuestions: number;
-  onTryAgain?: () => void;
+  isWinner: boolean;
+  onTryAgain: () => void;
 }
+
 
 const QuizSuccessPage = ({ score, totalQuestions, onTryAgain }: QuizSuccessPageProps) => {
   const percentage = Math.round((score / totalQuestions) * 100);

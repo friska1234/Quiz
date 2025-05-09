@@ -18,7 +18,7 @@ const Quiz = () => {
     currentQuestionIndex: 0,
     answers: {},
     showExplanation: false,
-    quizCompleted: false
+    quizCompleted: false,
   });
 
   // Define the calculateScore function early
@@ -31,14 +31,14 @@ const Quiz = () => {
     });
     return correctAnswers;
   };
-  
+
   const resetQuiz = () => {
     setQuizState({
       questions: quizState.questions,
       currentQuestionIndex: 0,
       answers: {},
       showExplanation: false,
-      quizCompleted: false
+      quizCompleted: false,
     });
   };
 
@@ -49,7 +49,7 @@ const Quiz = () => {
         const questions = await fetchQuizQuestions();
         setQuizState(prevState => ({
           ...prevState,
-          questions
+          questions,
         }));
         setLoading(false);
       } catch (err) {
@@ -89,31 +89,35 @@ const Quiz = () => {
     );
   }
 
-  // If quiz is completed, show result page
+  // If quiz is completed, calculate score and determine win state (winning is 3 out of 5)
   if (quizState.quizCompleted) {
     const score = calculateScore(quizState.answers, quizState.questions);
     const totalQuestions = quizState.questions.length;
-    
-    return <QuizSuccessPage 
-      score={score} 
-      totalQuestions={totalQuestions} 
-      onTryAgain={resetQuiz}
-    />;
+    // Set winning state if the score is 3 or more (out of 5 questions)
+    const isWinner = score >= 3;
+
+    return (
+      <QuizSuccessPage
+        score={score}
+        totalQuestions={totalQuestions}
+        isWinner={isWinner}
+        onTryAgain={resetQuiz}
+      />
+    );
   }
 
   const currentQuestion = quizState.questions[quizState.currentQuestionIndex];
   const selectedAnswer = quizState.answers[currentQuestion.id] || '';
-  const isCorrect = selectedAnswer === currentQuestion.correctAnswer;
 
   const handleSelectOption = (option: string) => {
     if (quizState.showExplanation) return;
-    
+
     setQuizState(prevState => ({
       ...prevState,
       answers: {
         ...prevState.answers,
-        [currentQuestion.id]: option
-      }
+        [currentQuestion.id]: option,
+      },
     }));
   };
 
@@ -122,7 +126,7 @@ const Quiz = () => {
       // Show explanation first
       setQuizState(prevState => ({
         ...prevState,
-        showExplanation: true
+        showExplanation: true,
       }));
       return;
     }
@@ -133,14 +137,14 @@ const Quiz = () => {
       // Quiz completed
       setQuizState(prevState => ({
         ...prevState,
-        quizCompleted: true
+        quizCompleted: true,
       }));
     } else {
       // Move to next question
       setQuizState(prevState => ({
         ...prevState,
         currentQuestionIndex: prevState.currentQuestionIndex + 1,
-        showExplanation: false
+        showExplanation: false,
       }));
     }
   };
@@ -150,7 +154,7 @@ const Quiz = () => {
       setQuizState(prevState => ({
         ...prevState,
         currentQuestionIndex: prevState.currentQuestionIndex - 1,
-        showExplanation: false
+        showExplanation: false,
       }));
     }
   };
@@ -163,9 +167,9 @@ const Quiz = () => {
         <span className="text-sm font-medium">Quiz</span>
       </div>
 
-      <ProgressBar 
-        currentQuestion={quizState.currentQuestionIndex + 1} 
-        totalQuestions={quizState.questions.length} 
+      <ProgressBar
+        currentQuestion={quizState.currentQuestionIndex + 1}
+        totalQuestions={quizState.questions.length}
       />
 
       <div className="bg-white shadow-md rounded-lg p-6 mb-8">
@@ -189,7 +193,10 @@ const Quiz = () => {
           <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
             <div className="flex items-start mb-2">
               <div className="bg-friska-green/20 rounded-full p-1 mr-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#79c142" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#79c142" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
               </div>
               <div>
                 <span className="font-semibold text-gray-700">Correct Answer: </span>
@@ -203,21 +210,21 @@ const Quiz = () => {
       </div>
 
       <div className="flex justify-between">
-        <Button 
+        <Button
           onClick={handleBack}
-          variant="outline" 
+          variant="outline"
           disabled={quizState.currentQuestionIndex === 0}
           className="border-gray-300 text-gray-700 hover:bg-gray-100"
         >
           Back
         </Button>
-        <Button 
-          onClick={handleNext} 
+        <Button
+          onClick={handleNext}
           disabled={!selectedAnswer}
           className="bg-friska-purple hover:bg-friska-light-purple text-white"
         >
-          {quizState.showExplanation ? 
-            (quizState.currentQuestionIndex === quizState.questions.length - 1 ? "Finish Quiz" : "Next Question") : 
+          {quizState.showExplanation ?
+            (quizState.currentQuestionIndex === quizState.questions.length - 1 ? "Finish Quiz" : "Next Question") :
             "Check Answer"
           }
         </Button>
