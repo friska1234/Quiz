@@ -158,7 +158,7 @@ const Home = () => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-3xl">
       <div className="flex items-center mb-4">
-        <Link to="/" className="text-sm text-gray-500 hover:text-friska-purple">Home</Link>
+        <Link to="https://friskanutriai.com" className="text-sm text-gray-500 hover:text-friska-purple">Home</Link>
         <span className="mx-2 text-gray-400">›</span>
         <span className="text-sm font-medium">Quiz</span>
       </div>
