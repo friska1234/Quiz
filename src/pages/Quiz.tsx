@@ -8,6 +8,7 @@ import { fetchQuizQuestions } from '@/services/quizService';
 import { toast } from "@/components/ui/sonner";
 import { Loader } from "lucide-react";
 import type { QuizState } from '@/types/quiz';
+import QuizFailurePage from '@/components/quiz/Failure';
 
 const Quiz = () => {
   // Define the quiz state and functions first
@@ -94,16 +95,19 @@ const Quiz = () => {
     const score = calculateScore(quizState.answers, quizState.questions);
     const totalQuestions = quizState.questions.length;
     // Set winning state if the score is 3 or more (out of 5 questions)
-    const isWinner = score >= 3;
+    const isWinner = score === 3;
 
-    return (
-      <QuizSuccessPage
+    if (isWinner) {
+      return <QuizSuccessPage
+        />;
+    } else {
+      return <QuizFailurePage
         score={score}
         totalQuestions={totalQuestions}
-        isWinner={isWinner}
-        onTryAgain={resetQuiz}
-      />
-    );
+        onTryAgain={resetQuiz} isWinner={false} />;
+    }
+ 
+
   }
 
   const currentQuestion = quizState.questions[quizState.currentQuestionIndex];

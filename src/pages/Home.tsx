@@ -31,7 +31,7 @@ const Home = () => {
     });
     return correctAnswers;
   };
-  
+
   const resetQuiz = () => {
     setQuizState({
       questions: quizState.questions,
@@ -93,12 +93,45 @@ const Home = () => {
   if (quizState.quizCompleted) {
     const score = calculateScore(quizState.answers, quizState.questions);
     const totalQuestions = quizState.questions.length;
-    
-    return <QuizSuccessPage 
-      score={score} 
-      totalQuestions={totalQuestions} 
-      onTryAgain={resetQuiz}
-    />;
+    const passingScore = Math.floor(totalQuestions / 2); // Example: Passing score is 50%
+
+    if (score < passingScore) {
+      return (
+          <div className="container mx-auto px-4 py-8 max-w-lg">
+                   <div className="bg-[#FFF8F8] shadow-md rounded-3xl p-8 text-center">
+            <div className="w-full max-w-md mx-auto   rounded-3xl  flex flex-col items-center">
+                           {/* Trophy with sparkles */}
+              <div className="relative mb-6 animate-float">
+                {/* Trophy */}
+
+                <img src="/failure.png" width={300} height={300} alt="image" />
+
+              </div>
+                           <h1 className="text-3xl font-bold mt-8 mb-2">You're getting there — not a NutriAi Pro just yet!</h1>
+       
+                           <p className="text-gray-600 mb-4">
+                               Don't be discouraged — every expert starts with a few wrong answers. Take a moment to review and try again. You're almost there!
+                           </p>
+       
+                           <div className="mt-8">
+                <Button
+                  onClick={resetQuiz}
+                  className="bg-purple-600 hover:bg-purple-700 text-white px-12 py-3 rounded-md font-medium"
+                >
+                  Try Again
+                </Button>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+      );
+    }
+
+    return (
+      <QuizSuccessPage
+       
+      />
+    );
   }
 
   const currentQuestion = quizState.questions[quizState.currentQuestionIndex];
@@ -107,7 +140,7 @@ const Home = () => {
 
   const handleSelectOption = (option: string) => {
     if (quizState.showExplanation) return;
-    
+
     setQuizState(prevState => ({
       ...prevState,
       answers: {
@@ -163,9 +196,9 @@ const Home = () => {
         <span className="text-sm font-medium">Quiz</span>
       </div>
 
-      <ProgressBar 
-        currentQuestion={quizState.currentQuestionIndex + 1} 
-        totalQuestions={quizState.questions.length} 
+      <ProgressBar
+        currentQuestion={quizState.currentQuestionIndex + 1}
+        totalQuestions={quizState.questions.length}
       />
 
       <div className="bg-white shadow-md rounded-lg p-6 mb-8">
@@ -203,21 +236,21 @@ const Home = () => {
       </div>
 
       <div className="flex justify-between">
-        <Button 
+        <Button
           onClick={handleBack}
-          variant="outline" 
+          variant="outline"
           disabled={quizState.currentQuestionIndex === 0}
           className="border-gray-300 text-gray-700 hover:bg-gray-100"
         >
           Back
         </Button>
-        <Button 
-          onClick={handleNext} 
+        <Button
+          onClick={handleNext}
           disabled={!selectedAnswer}
           className="bg-friska-purple hover:bg-friska-light-purple text-white"
         >
-          {quizState.showExplanation ? 
-            (quizState.currentQuestionIndex === quizState.questions.length - 1 ? "Finish Quiz" : "Next Question") : 
+          {quizState.showExplanation ?
+            (quizState.currentQuestionIndex === quizState.questions.length - 1 ? "Finish Quiz" : "Next Question") :
             "Check Answer"
           }
         </Button>
