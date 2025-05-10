@@ -22,7 +22,7 @@ const App = () => (
           <Routes>
            <Route path="/" element={<Navigate to="/quiz" replace />} />
             <Route path="/quiz" element={<Home />} />
-            <Route path="/quizs" element={<QuizSuccessPage/>} />
+            {/* <Route path="/quizs" element={<QuizSuccessPage/>} /> */}
             <Route path="/how-it-works" element={<Home />} /> {/* Placeholder routes */}
             <Route path="/why-choose" element={<Home />} />
             <Route path="/who-can-benefit" element={<Home />} />

@@ -129,7 +129,10 @@ const Home = () => {
 
     return (
       <QuizSuccessPage
-       
+        score={score}
+        totalQuestions={totalQuestions}
+        onTryAgain={resetQuiz}
+        isWinner={true}
       />
     );
   }
